@@ -25,7 +25,6 @@
   <img src="https://github-readme-stats.vercel.app/api?username=AhmadAghazadeh&show_icons=true&hide=contribs" />
  </a>
 </p>
-
   
 <p align="center">
  <a href="https://stackoverflow.com/users/1770868/ahmad-aghazadeh" alt="Ahmad Aghazadeh's Stackoverflow stats">
