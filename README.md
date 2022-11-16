@@ -8,7 +8,7 @@
 
 <p align="center"> 
  <strong>
-  Professional skills
+   Professional skills
   </strong>
 </p>
 
