@@ -7,9 +7,7 @@
 </p>
 
 <p align="center">
-  <a href="https://linkedin.com/in/AhmadAghazadeh" target="_blank">
-  ![GitHub followers](https://img.shields.io/github/followers/AhmadAghazadeh?label=Follow&style=social)
- </a>
+ ![GitHub followers](https://img.shields.io/github/followers/AhmadAghazadeh?label=Follow&style=social)
 </p>
 
    
