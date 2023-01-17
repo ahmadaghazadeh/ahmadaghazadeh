@@ -6,6 +6,9 @@
  </a>
 </p>
 
+![GitHub followers](https://img.shields.io/github/followers/AhmadAghazadeh?label=Follow&style=social)
+![](https://visitor-badge.glitch.me/badge?page_id=AhmadAghazadeh)
+
 <p align="center"> 
  <strong>
    Professional skills
