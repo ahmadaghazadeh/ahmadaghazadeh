@@ -7,10 +7,13 @@
 </p>
 
 <p align="center">
-   [GitHub followers](https://img.shields.io/github/followers/AhmadAghazadeh?label=Follow&style=social)
-   [GitHub views](https://visitor-badge.glitch.me/badge?page_id=AhmadAghazadeh)
+   ![GitHub followers](https://img.shields.io/github/followers/AhmadAghazadeh?label=Follow&style=social)
+   ![GitHub views](https://visitor-badge.glitch.me/badge?page_id=AhmadAghazadeh)
 </p>
 
+ ![GitHub followers](https://img.shields.io/github/followers/AhmadAghazadeh?label=Follow&style=social)
+   ![GitHub views](https://visitor-badge.glitch.me/badge?page_id=AhmadAghazadeh)
+   
 <p align="center"> 
  <strong>
    Professional skills
