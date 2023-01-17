@@ -7,7 +7,7 @@
 </p>
 
 <a href="https://linkedin.com/in/AhmadAghazadeh" target="_blank">
-  <img src="[https://img.icons8.com/fluent/48/000000/linkedin.png](https://img.shields.io/github/followers/AhmadAghazadeh?label=Follow&style=social)" />
+  <img src="https://img.shields.io/github/followers/AhmadAghazadeh?label=Follow&style=social" />
  </a>
  
    ![GitHub followers]()
