@@ -6,12 +6,14 @@
  </a>
 </p>
 
-<a href="https://linkedin.com/in/AhmadAghazadeh" target="_blank">
+<a href="https://github.com/ahmadaghazadeh?tab=followers" target="_blank">
   <img src="https://img.shields.io/github/followers/AhmadAghazadeh?label=Follow&style=social" />
  </a>
  
-   ![GitHub followers]()
-   ![GitHub views](https://visitor-badge.glitch.me/badge?page_id=AhmadAghazadeh)
+ <a href="https://github.com/ahmadaghazadeh" target="_blank">
+  <img src="https://visitor-badge.glitch.me/badge?page_id=AhmadAghazadeh" />
+ </a>
+ 
    
 <p align="left"> 
  <strong>
