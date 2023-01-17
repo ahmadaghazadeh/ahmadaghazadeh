@@ -7,11 +7,12 @@
 </p>
 
 <p align="center">
-   ![GitHub followers](https://img.shields.io/github/followers/AhmadAghazadeh?label=Follow&style=social)
-   ![GitHub views](https://visitor-badge.glitch.me/badge?page_id=AhmadAghazadeh)
+  <a href="https://linkedin.com/in/AhmadAghazadeh" target="_blank">
+  ![GitHub followers](https://img.shields.io/github/followers/AhmadAghazadeh?label=Follow&style=social)
+ </a>
 </p>
 
- ![GitHub followers](https://img.shields.io/github/followers/AhmadAghazadeh?label=Follow&style=social)
+   
    ![GitHub views](https://visitor-badge.glitch.me/badge?page_id=AhmadAghazadeh)
    
 <p align="center"> 
