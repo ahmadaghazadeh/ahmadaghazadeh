@@ -6,8 +6,11 @@
  </a>
 </p>
 
-
-   ![GitHub followers](https://img.shields.io/github/followers/AhmadAghazadeh?label=Follow&style=social)
+<a href="https://linkedin.com/in/AhmadAghazadeh" target="_blank">
+  <img src="[https://img.icons8.com/fluent/48/000000/linkedin.png](https://img.shields.io/github/followers/AhmadAghazadeh?label=Follow&style=social)" />
+ </a>
+ 
+   ![GitHub followers]()
    ![GitHub views](https://visitor-badge.glitch.me/badge?page_id=AhmadAghazadeh)
    
 <p align="left"> 
