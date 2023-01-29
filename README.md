@@ -1,10 +1,6 @@
 <h1 align="left">I'm Ahmad Aghazadeh. </h1>
 
-<p>As a Senior Android developer with over 10 years of professional experience. I focus on Android applications and their integration with back-end services. Therefore, commitment to collaborative problem-solving, obeying Clean Code, Scrum, Clean Architecture, writing tests, and creating quality products is essential. I also train and guide newcomers' staff and code review their code. I am skilled in Java and Kotlin.
-
-Furthermore, I have over 10 years of experience creating and delivering scale-up and scale-out applications and solutions. The front-end of my website is built using React and the back-end is built using C#. Proven knowledge of clean code, SOLID, Unit tests, code reviews culture, TDD, microservices, BDD, and TDD.
-
-I work in an agile team. I constantly strive to learn new technologies to upgrade myself.
+<p>As a Senior Android and Full stack developer with over 10 years of professional experience. I focus on Android applications and their integration with back-end. Therefore, commitment to collaborative problem-solving, obeying Clean Code, Scrum, Clean Architecture, TDD, BDD, writing tests, and creating quality products is essential. I also train and guide newcomers' staff and code review their code. I am skilled in Java, Kotlin, C#, and React. I work in an agile team and I constantly strive to learn new technologies to upgrade myself.
 
 Android Developer | Software Engineer | Full Stack Developer | C# .NET Developer | Mobile Developer
 </p>
