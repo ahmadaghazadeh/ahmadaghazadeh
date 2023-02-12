@@ -20,7 +20,7 @@ Android Developer | Software Engineer | Full Stack Developer | C# .NET Developer
  </a>
  
  Pick a slot if you'd like to meet me and chat about anything you are passionate about - but make sure to describe the agenda
-
+ 
  <a href="https://calendly.com/ahmad-aghazadeh-a/30min" target="_blank"><img width="498" alt="meet_link" src="resources/30MinMeetting.png"></a>
 
  
