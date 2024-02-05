@@ -1,9 +1,7 @@
 <h1 align="left">I'm Ahmad Aghazadeh. </h1>
 
 <p>
-As a Senior Android developer with over 10 years of professional experience. I focus on Android applications and their integration with the back end. Therefore, commitment to collaborative problem-solving, critical thinking, obeying Clean Code, Scrum, Clean Architecture, TDD, BDD, writing tests, and creating quality products is essential. I also mentor and guide staff and review their code. I am skilled in Java and Kotlin. Furthermore, I work in an agile team and I constantly strive to learn upcoming technologies to upgrade myself. 
-
- Android Developer | Mobile Developer
+Results-oriented Back-End Developer with over 10 years of professional experience specializing in backend development and integration with the front end. Committed to collaborative problem-solving, critical thinking, and the creation of high-quality products. With a strong focus on Clean Code, Scrum, Clean Architecture, TDD, BDD, DDD, Microservices, and creating scalable solutions. Experienced in training and guiding staff, conducting code reviews, and staying updated with emerging technologies.
 </p>
 <p align="left">
  <a href="https://linkedin.com/in/AhmadAghazadeh" target="_blank">
