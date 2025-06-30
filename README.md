@@ -15,7 +15,7 @@ Results-oriented Software Engineer with over 14 years of professional experience
  </a>
  
  <a href="https://github.com/ahmadaghazadeh" target="_blank">
-  <img src="https://visitor-badge.glitch.me/badge?page_id=AhmadAghazadeh" />
+  <img src="(https://visitor-badge.laobi.icu/badge?page_id=AhmadAghazadeh)" />
  </a>
  
  Pick a slot if you'd like to meet me and chat about anything you are passionate about - but make sure to describe the agenda
