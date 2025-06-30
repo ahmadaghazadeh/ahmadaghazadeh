@@ -10,9 +10,8 @@ Results-oriented Software Engineer with over 14 years of professional experience
  </a>
 </p>
 
-<a href="https://github.com/ahmadaghazadeh?tab=followers" target="_blank">
-  <img src="https://img.shields.io/github/followers/AhmadAghazadeh?label=Follow&style=social" />
- </a>
+![Visitor Count](https://visitor-badge.laobi.icu/badge?page_id=AhmadAghazadeh)
+
  
  <a href="https://github.com/ahmadaghazadeh" target="_blank">
   <img src="(https://visitor-badge.laobi.icu/badge?page_id=AhmadAghazadeh)" />
