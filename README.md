@@ -45,7 +45,6 @@ Results-oriented Software Engineer with over 14 years of professional experience
   
 <p align="left">
  <a href="https://stackoverflow.com/users/1770868/ahmad-aghazadeh" alt="Ahmad Aghazadeh's Stackoverflow stats">
-  <img src="https://stackexchange.com/users/flair/1972221.png" />
  </a>
 </p>
   
