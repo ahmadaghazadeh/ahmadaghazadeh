@@ -4,11 +4,14 @@ export const MAX_HISTORY_MESSAGES = 12;
 const MAX_BODY_BYTES = 24_000;
 
 export type CareerMessage = { role: "user" | "assistant"; content: string };
+export type CareerExchange = { conversationId: string; question: string; answer?: string; error?: string };
+type Reply = { answer: string } | { error: string; status: number };
 type Dependencies = {
   apiKey: () => string | undefined;
   context: string;
   fetcher?: typeof fetch;
   timeoutMs?: number;
+  onExchange?: (exchange: CareerExchange) => void | Promise<void>;
 };
 
 function json(body: object, status = 200) {
@@ -47,11 +50,72 @@ function validMessages(value: unknown): value is CareerMessage[] {
     && value[value.length - 1].role === "user";
 }
 
-export function createCareerChatHandler({ apiKey, context, fetcher = fetch, timeoutMs = 60_000 }: Dependencies) {
+function conversationIdFrom(body: unknown) {
+  const id = body && typeof body === "object" && "conversationId" in body ? body.conversationId : undefined;
+  return typeof id === "string" && /^[A-Za-z0-9-]{8,64}$/.test(id) ? id : crypto.randomUUID();
+}
+
+export function createCareerChatHandler({ apiKey, context, fetcher = fetch, timeoutMs = 60_000, onExchange }: Dependencies) {
   // Small, process-local throttle for this local site, shared across all visitors.
   // A distributed rate limiter is needed if deployed across multiple instances.
   let windowStart = 0;
   let requestCount = 0;
+
+  async function reply(messages: CareerMessage[], signal: AbortSignal): Promise<Reply> {
+    const key = apiKey()?.trim();
+    if (!key) return { error: "Chat is not configured yet. You can contact Ahmad by email instead.", status: 503 };
+    const now = Date.now();
+    if (now - windowStart >= 60_000) { windowStart = now; requestCount = 0; }
+    if (requestCount >= 10) return { error: "Chat is busy. Please try again in a minute.", status: 429 };
+    requestCount++;
+
+    try {
+      const response = await fetcher("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+        signal: AbortSignal.any([AbortSignal.timeout(timeoutMs), signal]),
+        cache: "no-store",
+        body: JSON.stringify({
+          model: CAREER_CHAT_MODEL,
+          provider: { max_price: { prompt: 0, completion: 0, request: 0 }, require_parameters: true },
+          messages: [{ role: "system", content: context }, ...messages.map(({ role, content }) => ({ role, content: content.trim() }))],
+          stream: false,
+          response_format: {
+            type: "json_schema",
+            json_schema: {
+              name: "career_answer",
+              strict: true,
+              schema: { type: "object", properties: { answer: { type: "string" } }, required: ["answer"], additionalProperties: false },
+            },
+          },
+          temperature: 0.3,
+          max_tokens: 900,
+          reasoning: { enabled: false, exclude: true },
+        }),
+      });
+      if (!response.ok) {
+        if (response.status === 429) return { error: "The free AI model has reached its request limit. Please try again later.", status: 429 };
+        if ([401, 402, 403].includes(response.status)) return { error: "The free AI connection is unavailable. Please contact Ahmad directly.", status: 503 };
+        return { error: "The free AI model is temporarily unavailable. Please try again later.", status: 503 };
+      }
+      const data = await response.json();
+      const content = data?.choices?.[0]?.message?.content;
+      // Only the final answer is returned; never expose upstream errors or reasoning.
+      if (data.error || typeof content !== "string" || !content.trim()) {
+        return { error: "The AI did not return an answer. Please try again.", status: 502 };
+      }
+      let answer: unknown;
+      try { answer = JSON.parse(content)?.answer; }
+      catch { return { error: "The AI did not return a valid career answer. Please try again.", status: 502 }; }
+      if (typeof answer !== "string" || !answer.trim()) return { error: "The AI did not return a valid career answer. Please try again.", status: 502 };
+      return { answer: answer.trim().slice(0, 6000) };
+    } catch (error) {
+      const timedOut = error instanceof Error && ["TimeoutError", "AbortError"].includes(error.name);
+      return timedOut
+        ? { error: "The free model took too long to respond. Please try again.", status: 504 }
+        : { error: "Could not reach the free AI model. Please try again later.", status: 503 };
+    }
+  }
 
   return async function POST(request: Request) {
     const origin = request.headers.get("origin");
@@ -81,56 +145,15 @@ export function createCareerChatHandler({ apiKey, context, fetcher = fetch, time
     if (!validMessages(messages)) {
       return json({ error: "Please send a question of 1–2,000 characters in a valid conversation." }, 400);
     }
-    const key = apiKey()?.trim();
-    if (!key) return json({ error: "Chat is not configured yet. You can contact Ahmad by email instead." }, 503);
-    const now = Date.now();
-    if (now - windowStart >= 60_000) { windowStart = now; requestCount = 0; }
-    if (requestCount >= 10) return json({ error: "Chat is busy. Please try again in a minute." }, 429);
-    requestCount++;
 
+    const result = await reply(messages, request.signal);
     try {
-      const response = await fetcher("https://openrouter.ai/api/v1/chat/completions", {
-        method: "POST",
-        headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-        signal: AbortSignal.any([AbortSignal.timeout(timeoutMs), request.signal]),
-        cache: "no-store",
-        body: JSON.stringify({
-          model: CAREER_CHAT_MODEL,
-          provider: { max_price: { prompt: 0, completion: 0, request: 0 }, require_parameters: true },
-          messages: [{ role: "system", content: context }, ...messages.map(({ role, content }) => ({ role, content: content.trim() }))],
-          stream: false,
-          response_format: {
-            type: "json_schema",
-            json_schema: {
-              name: "career_answer",
-              strict: true,
-              schema: { type: "object", properties: { answer: { type: "string" } }, required: ["answer"], additionalProperties: false },
-            },
-          },
-          temperature: 0.3,
-          max_tokens: 900,
-          reasoning: { enabled: false, exclude: true },
-        }),
+      await onExchange?.({
+        conversationId: conversationIdFrom(body),
+        question: messages[messages.length - 1].content.trim(),
+        ...("answer" in result ? { answer: result.answer } : { error: result.error }),
       });
-      if (!response.ok) {
-        if (response.status === 429) return json({ error: "The free AI model has reached its request limit. Please try again later." }, 429);
-        if ([401, 402, 403].includes(response.status)) return json({ error: "The free AI connection is unavailable. Please contact Ahmad directly." }, 503);
-        return json({ error: "The free AI model is temporarily unavailable. Please try again later." }, 503);
-      }
-      const data = await response.json();
-      const content = data?.choices?.[0]?.message?.content;
-      // Only the final answer is returned; never expose upstream errors or reasoning.
-      if (data.error || typeof content !== "string" || !content.trim()) {
-        return json({ error: "The AI did not return an answer. Please try again." }, 502);
-      }
-      let answer: unknown;
-      try { answer = JSON.parse(content)?.answer; }
-      catch { return json({ error: "The AI did not return a valid career answer. Please try again." }, 502); }
-      if (typeof answer !== "string" || !answer.trim()) return json({ error: "The AI did not return a valid career answer. Please try again." }, 502);
-      return json({ answer: answer.trim().slice(0, 6000) });
-    } catch (error) {
-      const timedOut = error instanceof Error && ["TimeoutError", "AbortError"].includes(error.name);
-      return json({ error: timedOut ? "The free model took too long to respond. Please try again." : "Could not reach the free AI model. Please try again later." }, timedOut ? 504 : 503);
-    }
+    } catch { /* Recording must never break the visitor's chat. */ }
+    return "answer" in result ? json({ answer: result.answer }) : json({ error: result.error }, result.status);
   };
 }

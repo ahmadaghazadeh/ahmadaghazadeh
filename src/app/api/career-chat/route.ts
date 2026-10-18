@@ -1,4 +1,7 @@
+import { headers } from "next/headers";
+import { after } from "next/server";
 import { profile, workHighlights } from "@/content/profile";
+import { recordExchange } from "@/lib/analytics-store";
 import { createCareerChatHandler } from "@/lib/career-chat";
 
 export const runtime = "nodejs";
@@ -37,4 +40,8 @@ ${JSON.stringify({
 export const POST = createCareerChatHandler({
   apiKey: () => process.env.OPENROUTER_API_KEY,
   context,
+  onExchange: async exchange => {
+    const country = (await headers()).get("x-vercel-ip-country") ?? undefined;
+    after(() => recordExchange(exchange, country));
+  },
 });

@@ -87,6 +87,31 @@ test("bounds timeouts and throttles repeated calls", async () => {
   assert.equal(calls, 10);
 });
 
+test("reports answered and failed exchanges with the conversation id", async () => {
+  const chat = (conversationId, content = " Hi ") => new Request("http://localhost:3002/api/career-chat", {
+    method: "POST", headers: { "content-type": "application/json" },
+    body: JSON.stringify({ messages: [{ role: "user", content }], conversationId }),
+  });
+  const exchanges = [];
+  const onExchange = exchange => { exchanges.push(exchange); };
+  const answered = handler({ onExchange, fetcher: async () => Response.json({ choices: [{ message: { content: JSON.stringify({ answer: "Answer" }) } }] }) });
+  assert.equal((await answered(chat("conversation-1234"))).status, 200);
+  assert.deepEqual(exchanges[0], { conversationId: "conversation-1234", question: "Hi", answer: "Answer" });
+
+  assert.equal((await handler({ onExchange, apiKey: () => undefined })(chat("conversation-1234"))).status, 503);
+  assert.equal(exchanges[1].conversationId, "conversation-1234");
+  assert.match(exchanges[1].error, /not configured/);
+  assert.equal(exchanges[1].answer, undefined);
+
+  await answered(chat("bad id!"));
+  assert.match(exchanges[2].conversationId, /^[0-9a-f-]{36}$/);
+
+  await handler({ onExchange: () => { throw new Error("must not call"); }, fetcher: async () => { throw new Error("no upstream"); } })(chat("conversation-1234", " "));
+  assert.equal(exchanges.length, 3);
+  const failingRecorder = handler({ onExchange: async () => { throw new Error("storage down"); }, fetcher: async () => Response.json({ choices: [{ message: { content: JSON.stringify({ answer: "Still answered" }) } }] }) });
+  assert.deepEqual(await (await failingRecorder(chat("conversation-1234"))).json(), { answer: "Still answered" });
+});
+
 test("rejects classifier output and malformed structured answers", async () => {
   for (const content of ["User Safety: safe", "{}", '{"answer":17}', '{"answer":" "}']) {
     const post = handler({ fetcher: async () => Response.json({ choices: [{ message: { content } }] }) });

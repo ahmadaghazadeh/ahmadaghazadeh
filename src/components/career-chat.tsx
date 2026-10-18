@@ -19,6 +19,7 @@ export function CareerChat() {
   const input = useRef<HTMLTextAreaElement>(null);
   const conversation = useRef<HTMLDivElement>(null);
   const controller = useRef<AbortController | null>(null);
+  const conversationId = useRef<string | null>(null);
   const busy = useRef(false);
 
   useEffect(() => {
@@ -38,12 +39,13 @@ export function CareerChat() {
     setMessages(history);
     const abort = new AbortController();
     controller.current = abort;
+    conversationId.current ??= crypto.randomUUID();
     try {
       const response = await fetch("/api/career-chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         signal: abort.signal,
-        body: JSON.stringify({ messages: history }),
+        body: JSON.stringify({ messages: history, conversationId: conversationId.current }),
       });
       const data = await response.json();
       if (!response.ok || typeof data.answer !== "string") throw new Error(data.error || "Chat could not respond. Please try again.");
@@ -63,7 +65,7 @@ export function CareerChat() {
   }
 
   function submit(event: FormEvent<HTMLFormElement>) { event.preventDefault(); void send(question); }
-  function clear() { if (!pending) { setMessages([]); setError(""); setQuestion(""); input.current?.focus({ preventScroll: true }); } }
+  function clear() { if (!pending) { conversationId.current = null; setMessages([]); setError(""); setQuestion(""); input.current?.focus({ preventScroll: true }); } }
 
   return (
     <section id="digital-twin" aria-labelledby="career-chat-title" className={`shell section ${styles.widget}`}>
@@ -73,7 +75,7 @@ export function CareerChat() {
           <p>Explore my career, engineering work, and approach to building software.</p>
         </header>
         <div className={styles.panel}>
-        <p className={styles.notice}>An AI guide to Ahmad’s professional experience. Answers may be imperfect. Messages are sent to OpenRouter and its model provider.</p>
+        <p className={styles.notice}>An AI guide to Ahmad’s professional experience. Answers may be imperfect. Messages are sent to OpenRouter and its model provider, and saved so Ahmad can read them.</p>
         <div ref={conversation} className={styles.conversation} role="log" aria-label="Career conversation" aria-live="polite" aria-relevant="additions text" aria-busy={pending}>
           {messages.length === 0 && !pending && <div className={styles.welcome}><p>Hi! Ask me about Ahmad’s experience, skills, or engineering work.</p><div className={styles.suggestions}>{suggestions.map(text => <button type="button" key={text} onClick={() => void send(text)}>{text} <span aria-hidden="true">↗</span></button>)}</div></div>}
           {messages.map((message, index) => <div className={message.role === "user" ? styles.userMessage : styles.assistantMessage} key={`${index}-${message.role}`}><span>{message.role === "user" ? "You" : "AI career guide"}</span><p><AnswerText content={message.content} /></p></div>)}
@@ -84,7 +86,7 @@ export function CareerChat() {
           <label htmlFor="career-chat-question">Your question</label>
           <textarea id="career-chat-question" ref={input} value={question} onChange={event => setQuestion(event.target.value)} maxLength={2000} rows={2} placeholder="Ask about experience, skills, or projects…" disabled={pending} onKeyDown={event => { if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); if (question.trim()) void send(question); } }} />
           <div className={styles.formActions}><button type="button" className={styles.reset} onClick={clear} disabled={pending || (!messages.length && !error)}>New chat</button><button className={styles.send} type="submit" disabled={pending || !question.trim()}>{pending ? "Thinking…" : "Send question →"}</button></div>
-          <p className={styles.footnote}>Chat is not saved by this website.</p>
+          <p className={styles.footnote}>Conversations are saved and may be read by Ahmad. Please don’t share sensitive personal information.</p>
         </form>
         </div>
     </section>

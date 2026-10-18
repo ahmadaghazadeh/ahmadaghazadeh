@@ -41,10 +41,35 @@ a new line, preserves failed questions for retry, and offers New chat.
 
 ## Privacy and hosting
 
-The API key stays on the server. Chat history lives only in the current browser
-component and is cleared on reload or New chat; this website does not persist it.
-The submitted conversation and public profile context are sent to OpenRouter and
-the selected model provider. Their data handling policies still apply.
+The API key stays on the server. The widget keeps its own history in the current
+browser component; reload or New chat starts a new conversation. Every question,
+with its answer or error, is saved server-side so the owner can review it on the
+private dashboard (see below), and the widget tells visitors this. The submitted
+conversation and public profile context are sent to OpenRouter and the selected
+model provider. Their data handling policies still apply.
+
+## Private dashboard and visit counter
+
+`/admin` shows visit totals, approximate unique visitors, visits per day for the
+last 14 days, and recent conversations. It is not linked from the site, is marked
+`noindex`, and requires a password.
+
+Server environment variables:
+
+| Variable | Purpose |
+| --- | --- |
+| `ADMIN_PASSWORD` | Dashboard password, at least 12 characters. Changing it signs out existing sessions. |
+| `KV_REST_API_URL`, `KV_REST_API_TOKEN` | Upstash Redis REST credentials. Added automatically when an Upstash Redis database is connected to the Vercel project. `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` also work. |
+
+Without Redis the site and chat keep working; nothing is recorded and the
+dashboard says storage is not connected. Logging in sets a signed, HTTP-only,
+`SameSite=strict` cookie for seven days. After five wrong passwords from one IP,
+login is locked for 15 minutes (requires Redis).
+
+The homepage sends one `POST /api/visit` per browser session with a random ID kept
+in `localStorage`, used only for the unique-visitor estimate. Visits made while
+logged in as admin are not counted. Chats are recorded with the visitor's country
+when Vercel provides it; IP addresses are not stored with chats.
 
 This feature needs a running Next.js server (local, Vercel, or another compatible
 host). GitHub Pages alone cannot run the chat endpoint. If publishing a static
@@ -59,5 +84,6 @@ npm.cmd run build
 ```
 
 Tests mock OpenRouter and verify fixed free routing, request validation, history,
-secret-safe provider errors, empty replies, timeouts, and throttling. A real local
+secret-safe provider errors, empty replies, timeouts, throttling, and that every
+exchange is reported for recording without a storage failure breaking the chat. A real local
 chat smoke test is separate and consumes free-account requests.

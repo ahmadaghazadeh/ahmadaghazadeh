@@ -1,6 +1,7 @@
 import { Header } from "@/components/header";
 import { CurrentFocus } from "@/components/current-focus";
 import { CareerChat } from "@/components/career-chat";
+import { VisitTracker } from "@/components/visit-tracker";
 import { profile, workHighlights } from "@/content/profile";
 
 function Arrow({ diagonal = true }: { diagonal?: boolean }) { return <span aria-hidden="true">{diagonal ? "↗" : "→"}</span>; }
@@ -10,6 +11,7 @@ export default function Home() {
   return (
     <>
       <a className="skip-link" href="#main">Skip to content</a>
+      <VisitTracker />
       <Header />
       <main id="main">
         <section className="hero shell" id="home" aria-labelledby="hero-title">
