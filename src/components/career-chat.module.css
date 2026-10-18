@@ -1,0 +1,47 @@
+.widget { color: #f3f6fc; font-size: 18px; line-height: 1.7; }
+.widget button { font: inherit; cursor: pointer; }
+.widget button:focus-visible, .widget textarea:focus-visible { outline: 3px solid #b5eee5; outline-offset: 4px; }
+.header { margin-bottom: 32px; }
+.eyebrow { display: block; color: #b5eee5; font-size: 12px; letter-spacing: 1.7px; margin-bottom: 24px; font-weight: 600; }
+.header h2 { font-size: clamp(38px, 3.8vw, 56px); line-height: 1.2; letter-spacing: -1.5px; margin: 0 0 16px; }
+.header > p { color: #d0e0ef; font-size: 18px; margin: 0; }
+.panel { width: 100%; height: 680px; display: flex; flex-direction: column; background: #101e2b; border: 1px solid #bddfea40; border-radius: 26px; box-shadow: 0 18px 65px #07152826; overflow: hidden; }
+.notice { margin: 0; padding: 17px 28px; color: #bfd2e3; font-size: 13px; line-height: 1.7; border-bottom: 1px solid #c2d7f025; background: #bddfea06; }
+.conversation { flex: 1; overflow-y: auto; overscroll-behavior: contain; min-height: 130px; padding: 30px; scrollbar-width: thin; scrollbar-color: #739aae #101e2b; }
+.welcome > p { margin: 0 0 25px; padding: 18px 22px; background: #ffffff09; border: 1px solid #c6e3f026; border-radius: 18px; color: #e4eef8; width: fit-content; max-width: 85%; }
+.suggestions { display: flex; flex-wrap: wrap; gap: 12px; }
+.suggestions button { text-align: left; display: inline-flex; align-items: center; justify-content: space-between; gap: 20px; border-radius: 14px; border: 1px solid #b5eee533; background: #1e3b4b; padding: 13px 17px; color: #e5f4fb; font-size: 15px; line-height: 1.6; }
+.suggestions button:hover { background: #2b505e; }
+.suggestions span { color: #b5eee5; }
+.userMessage, .assistantMessage { border-radius: 18px; padding: 16px 22px; margin: 0 0 24px; width: fit-content; max-width: 82%; background: #ffffff09; border: 1px solid #c6e3f02b; }
+.userMessage { margin-left: auto; background: linear-gradient(115deg, #225f72, #4d4c7d); border-color: #b1c9e033; }
+.userMessage > span, .assistantMessage > span { font-size: 12px; color: #c1eae6; font-weight: 700; }
+.userMessage p, .assistantMessage p { white-space: pre-wrap; overflow-wrap: anywhere; margin: 6px 0 0; font-size: 17px; line-height: 1.8; }
+.thinking { color: #c9e6ed; font-size: 16px; margin: 0 0 14px; }
+.error { color: #ffe1d6; background: #523f45; border: 1px solid #ffc5ad66; border-radius: 14px; padding: 14px 18px; font-size: 16px; margin: 0; }
+.form { padding: 18px 28px; border-top: 1px solid #c2d7f02b; background: #0d1925; }
+.form label { display: block; color: #d4e8f1; font-size: 13px; margin-bottom: 8px; }
+.form textarea { display: block; width: 100%; resize: vertical; min-height: 76px; max-height: 140px; color: #f3f6fc; background: #0b1621; border: 1px solid #c2d7f066; border-radius: 16px; font: inherit; font-size: 17px; padding: 12px 16px; line-height: 1.6; }
+.form textarea::placeholder { color: #afc5d8; }
+.formActions { display: flex; align-items: center; justify-content: space-between; gap: 15px; margin-top: 14px; }
+.reset { padding: 8px 0; color: #d1e5f1; background: none; border: none; font-size: 15px !important; }
+.send { color: #173649; background: #b5eee5; border: none; border-radius: 40px; padding: 11px 23px; font-size: 16px !important; font-weight: 700 !important; }
+.widget button:disabled { opacity: .5; cursor: default; }
+.footnote { font-size: 12px; color: #c1d4e5; line-height: 1.6; margin: 12px 0 0; }
+@media (max-width: 600px) {
+ .panel { height: 710px; border-radius: 20px; }
+ .header > p { font-size: 17px; }
+ .eyebrow { font-size: 12px; letter-spacing: .8px; }
+ .notice { padding: 16px; font-size: 12px; }
+ .conversation { padding: 18px 15px; }
+ .welcome > p { max-width: 100%; padding: 15px; font-size: 16px; }
+ .suggestions { flex-direction: column; gap: 10px; }
+ .suggestions button { font-size: 14px; padding: 11px 13px; }
+ .userMessage, .assistantMessage { max-width: 95%; padding: 14px 16px; }
+ .userMessage p, .assistantMessage p { font-size: 16px; }
+ .form { padding: 16px; }
+ .form textarea { font-size: 16px; padding-inline: 12px; }
+ .send { font-size: 14px !important; padding: 10px 16px; }
+ .reset { font-size: 14px !important; }
+ .footnote { font-size: 12px; }
+}

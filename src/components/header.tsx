@@ -20,8 +20,7 @@ export function Header() {
   return (
     <header className="header">
       <div className="shell header-inner">
-        <a className="wordmark" href="#home" aria-label="Ahmad Aghazadeh, home" onClick={() => setOpen(false)}>aa<span>.</span></a>
-        <span className="header-note">ENGINEERING WITH INTENT</span>
+        <a className="wordmark" href="#home" aria-label="Ahmad Aghazadeh, home" onClick={() => setOpen(false)}>Ahmad Aghazadeh<span>.</span></a>
         <button ref={button} className="menu-button" aria-expanded={open} aria-controls="main-navigation" onClick={() => setOpen(!open)}>{open ? "Close −" : "Menu +"}</button>
         <nav id="main-navigation" aria-label="Main navigation" className={open ? "navigation is-open" : "navigation"}>
           {items.map(([label, id]) => <a key={id} href={`#${id}`} onClick={() => setOpen(false)}>{label}</a>)}

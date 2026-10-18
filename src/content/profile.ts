@@ -11,12 +11,21 @@ export type WorkHighlight = {
 
 // Editorial source: Profile.pdf (LinkedIn export). Keep claims and dates grounded
 // in that document. Optional case-study links appear only when a URL is supplied.
+export type FocusArea = {
+  title: string;
+  description: string;
+};
+
 export const profile = {
   name: "Ahmad Aghazadeh",
   role: "Senior Software Engineer",
-  location: "Tabriz, Iran",
   email: "ahmad.aghazadeh.a@gmail.com",
   intro: "I build scalable backend systems and full-stack applications. Turning complex requirements into software that stays clear, reliable, and ready to grow.",
+  focusIntro: "Building reliable backend services and distributed systems, while exploring how agentic AI can support software development.",
+  focusAreas: [
+    { title: "Scalable backend systems", description: "C# and .NET, microservices, and event-driven architecture — designed for clarity, reliability, and growth." },
+    { title: "Agentic engineering", description: "Exploring how AI agents can support the way we design, build, and maintain software." },
+  ] satisfies FocusArea[],
   about: [
     "Good software starts with understanding the problem. For over 14 years, I’ve worked across backend services, web applications, and mobile products — connecting the details of implementation to the bigger architectural picture.",
     "My home ground is C# and .NET, with a focus on distributed systems, clean architecture, and test-driven development. I care just as much about how a team works: thoughtful code reviews, shared knowledge, and helping other developers grow.",
@@ -29,10 +38,10 @@ export const profile = {
     { label: "Stack Overflow", url: "https://stackoverflow.com/users/1770868/ahmad-aghazadeh" },
   ],
   experience: [
-    { company: "Bet Technology", role: "Software Engineer", period: "May 2025 — Present", location: "Sydney, Australia · Remote from Iran", description: "Building scalable betting-feed services with Azure Service Fabric, the Actor model, event-driven processing, and test-driven development.", tags: ["Service Fabric", "Azure Service Bus", "Cosmos DB"] },
-    { company: "Specific-Group Austria", role: "Software Engineer", period: "May 2024 — Apr 2025", location: "Vienna, Austria · Remote from Iran", description: "Developed a restaurant application suite and ISP software, combining microservices and CQRS with testing, payment integrations, and observability.", tags: [".NET Core", "PostgreSQL", "OpenTelemetry"] },
-    { company: "Bulut", role: "Software Engineer", period: "Jul 2022 — May 2024", location: "Tabriz, Iran", description: "Worked on shipping and delivery systems, API integration, eventual consistency, central authentication, and delivery pipelines in close collaboration with UI/UX teams.", tags: ["Messaging", "CI/CD", "ELK"] },
-    { company: "Shoniz", role: "Software Engineer · Android Developer", period: "Jan 2011 — Jul 2022", location: "Tabriz, Iran", description: "Grew across mobile and backend engineering: ordering and market research applications, authentication services, REST APIs, and real-time dashboards. Led a team of three developers.", tags: ["C#", "Kotlin", "SQL Server"] },
+    { company: "Bet Technology", role: "Software Engineer", period: "May 2025 — Present", location: "Sydney, Australia · Remote", description: "Building scalable betting-feed services with Azure Service Fabric, the Actor model, event-driven processing, and test-driven development.", tags: ["Service Fabric", "Azure Service Bus", "Cosmos DB"] },
+    { company: "Specific-Group Austria", role: "Software Engineer", period: "May 2024 — Apr 2025", location: "Vienna, Austria · Remote", description: "Developed a restaurant application suite and ISP software, combining microservices and CQRS with testing, payment integrations, and observability.", tags: [".NET Core", "PostgreSQL", "OpenTelemetry"] },
+    { company: "Bulut", role: "Software Engineer", period: "Jul 2022 — May 2024", description: "Worked on shipping and delivery systems, API integration, eventual consistency, central authentication, and delivery pipelines in close collaboration with UI/UX teams.", tags: ["Messaging", "CI/CD", "ELK"] },
+    { company: "Shoniz", role: "Software Engineer · Android Developer", period: "Jan 2011 — Jul 2022", description: "Grew across mobile and backend engineering: ordering and market research applications, authentication services, REST APIs, and real-time dashboards. Led a team of three developers.", tags: ["C#", "Kotlin", "SQL Server"] },
   ],
   expertise: [
     { number: "01", title: "Backend engineering", description: "Clear boundaries. Maintainable foundations.", skills: ["C# / .NET", "REST APIs", "Clean Architecture", "DDD", "CQRS", "SQL Server", "PostgreSQL"] },
