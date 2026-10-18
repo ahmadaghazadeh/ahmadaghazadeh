@@ -3,6 +3,9 @@ Results-oriented Software Engineer with over 14 years of professional experience
 
 </p>
 <p align="left">
+ <strong>Portfolio:</strong> <a href="https://ahmad-aghazadeh-portfolio.vercel.app/" target="_blank">ahmad-aghazadeh-portfolio.vercel.app</a>
+</p>
+<p align="left">
  <a href="https://linkedin.com/in/AhmadAghazadeh" target="_blank">
   <img src="https://img.icons8.com/fluent/48/000000/linkedin.png" />
  </a>
